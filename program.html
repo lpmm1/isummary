@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>iSummary - Examina</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="css/grayscale.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/file-input.css">
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    
+    <script src="js/Chart.min.js"></script>  
+
+    <script src="js/jspdf.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="css/jqcloud.css">
+
+
+      <script>
+
+          $(document).ready(function() {     
+
+              $("#archivo1").click(function() {
+                  $("#file1").trigger("click")
+              })
+              $("#archivo2").click(function() {
+                  $("#file2").trigger("click")
+              })
+              $("#archivo3").click(function() {
+                  $("#file3").trigger("click")
+              })
+
+              $("#file1").change(
+                function() {             
+                  var res = $(this).val().split("\\")[2];
+                  $("#ojo1").show()
+                  $("#label1").text(res)
+                })
+              $("#file2").change(
+                function() {
+                  var res = $(this).val().split("\\")[2];
+                  $("#ojo2").show()
+                  $("#label2").text(res)
+                })
+              $("#file3").change(
+                function() {
+                  var res = $(this).val().split("\\")[2];
+                  $("#ojo3").show()
+                  $("#label3").text(res)                
+                })
+
+              $('[data-toggle="popover1"]').popover();
+              $('[data-toggle="popover2"]').popover();
+              $('[data-toggle="popover3"]').popover();
+              $('[data-toggle="popover4"]').popover();
+              $('[data-toggle="popover5"]').popover();
+              $('[data-toggle="popover6"]').popover();
+              $('[data-toggle="popover7"]').popover();
+              $('[data-toggle="paginas"]').popover();
+              $('[data-toggle="infomedida1"]').popover();
+              $('[data-toggle="infomedida2"]').popover();
+              
+
+              $('body').on('click', function (e) {
+                $('.toggle').each(function () {               
+                    if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                        $(this).popover('hide');
+                    }
+                });       
+              });                        
+          })
+      </script>
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="migradiente navbar navbar-expand-lg navbar-light absoluto" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="../isummary/index.html">iSummary</a>        
+      </div>
+    </nav>
+
+
+    <!-- Contenido examinar -->
+    <section id="projects" class="projects-section bg-light">
+    <div class="container">
+          
+        <div class="row">          
+          <div id="todoexaminar" class="col-lg-12 mx-auto" style="border: 2px solid #FFF; padding: 30px;margin-bottom: 70px;">
+            <p></p>
+            <h2 class="text-white mb-4" style="text-align: center; padding-bottom: 20px;">Introduce los ficheros que se van a analizar</h2>      
+           
+            <div style="padding:15px;">
+                <label class="text-white" for="avatar">Fichero original</label>
+                <div class="icon">
+                  <img src="img/otrofondo.png" class="toggle" data-toggle="popover1" data-content="En este apartado hay que indicar el fichero original">
+                </div> 
+                
+                <!--<span style="font-style: italic;float: right;display:none;" class="text-white-50" id="span1">Visualizar</span>-->
+                <br></br>
+
+                <div id="drop_zone">
+                  <input class="file-upload-input" id="file1" type='file' onchange="readURL(this,1);" ondrop="dropHandler(event);"/>
+                  <label id="label1" style="margin-bottom:0;">Haz click aqui o arrastra los archivos desde cualquier carpeta  <i class="fas fa-file-upload"> </i></label>
+                  &nbsp;<button style="position: relative;color: #ebeae1;display:none;" id="ojo1" class="botonvisualizar btn-primary text-center"><i id="ojo1" style="padding-top: 5px;" class="far fa-eye"></i></button>
+                  
+                </div>
+                            
+                <!-- The Modal -->
+                <div id="myModal1" class="modal">
+                  <!-- Modal content -->
+                  <div id="previsualizacion1" class="modal-content">                                      
+                  </div>
+                </div>
+
+            </div>
+
+
+            <div style="clear:both"></div>
+            <div style="padding:15px;">
+                <div class="icon"><img src="img/otrofondo.png" class="toggle" data-toggle="popover2" data-content="En este apartado hay que indicar el fichero resumen automatico"></div>       
+                <label class="text-white" for="avatar">Fichero resumen automático</label>
+                &nbsp;&nbsp;&nbsp;<label style="color: #bbb!important;font-size: 11px !important;">¿No tienes resumenes automáticos? </label>
+                &nbsp;<label style="color: #bbb!important; font-size: 11px !important;cursor:pointer;text-decoration: underline;" class="toggle" data-toggle="paginas" data-content="Puedes usar las siguientes páginas: resoomer.com/es gplsi.dlsi.ua.es/demos/compendium (solo ingles)">Haz click aqui</label>
+                               
+                <br></br>
+
+                <div id="drop_zone">
+                  <input class="file-upload-input" id="file2" type='file' onchange="readURL(this,2);" ondrop="dropHandler(event);"/>
+                  <label id="label2" style="margin-bottom:0;">Haz click aqui o arrastra los archivos desde cualquier carpeta  <i class="fas fa-file-upload"> </i></label>
+                  &nbsp;<button style="position: relative;color: #ebeae1;display:none;" id="ojo2" class="botonvisualizar btn-primary text-center"><i id="ojo2" style="padding-top: 5px;" class="far fa-eye"></i></button>
+                </div>
+                
+                <!-- The Modal -->
+                <div id="myModal2" class="modal">
+                  <!-- Modal content -->
+                  <div id="previsualizacion2" class="modal-content">                                      
+                  </div>
+                </div>
+            </div>
+
+
+            <div style="clear:both"></div>
+            <div style="padding:15px;">
+                <div class="icon"><img src="img/otrofondo.png" class="toggle" data-toggle="popover3" data-content="En este apartado hay que indicar el fichero resumen manual"></div> 
+                <label class="text-white" for="avatar">Fichero resumen manual</label>
+               
+                <br></br>
+
+                <div id="drop_zone">
+                  <input class="file-upload-input" id="file3" type='file' onchange="readURL(this,3);" ondrop="dropHandler(event);"/>
+                  <label id="label3" style="margin-bottom:0;">Haz click aqui o arrastra los archivos desde cualquier carpeta  <i class="fas fa-file-upload"> </i></label>
+                  &nbsp;<button style="position: relative;color: #ebeae1;display:none;" id="ojo3" class="botonvisualizar btn-primary text-center"><i id="ojo3" style="padding-top: 5px;" class="far fa-eye"></i></button>
+                </div>
+
+                <!-- The Modal -->
+                <div id="myModal3" class="modal">
+                  <!-- Modal content -->
+                  <div id="previsualizacion3" class="modal-content">                                      
+                  </div>
+                </div>
+            </div>
+            
+            <hr />
+
+            <div style="padding:15px;">
+              <div class="icon"><img src="img/otrofondo.png" class="toggle" data-toggle="popover4" data-content="Con este porcentaje estas indicando la cantidad de palabras con las que evaluará los ficheros"></div>
+              <!--<p class="text-white">Introduce el porcentaje de palabras que quieres mostrar:--> 
+              <p class="text-white">Introduce el grado de palabras que quieres utilizar: 
+              <!--<input type="text" size="4" class="porcentajepalabras" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode== 46' maxlength="3">-->
+                <input type="radio" style="margin-left: 20px;" name="editList" id="bajo" value="bajo" checked/>
+                <label for="bajo" style="color: #bbb!important;">Bajo</label>
+
+                <input type="radio" style="margin-left: 20px;" name="editList" id="medio" value="medio"/>
+                <label for="medio" style="color: #bbb!important;">Medio</label>
+
+                <input type="radio" style="margin-left: 20px;" name="editList" id="alto" value="alto"/>
+                <label for="alto" style="color: #bbb!important;">Alto</label>                      
+              </p>
+            </div>
+            <center><button style="color: #ebeae1" id="botonevaluar" class="input btn btn-primary js-scroll-trigger text-center">Evaluar</button></center>
+            <p></p>
+          </div>
+        </div>
+
+      <!--NO VISIBLE -->
+
+      <div class="row">
+        <div id="resultados" class="col-lg-12 mx-auto" style="border: 2px solid rgb(100, 161, 157); color: white; padding: 30px;display: none;">   
+            <h1 class="text-white" style="text-align: center; padding-bottom: 70px;">Resultados obtenidos</h1>
+
+            <!-- NUBE DE PALABRAS -->
+            <h3 class="accordion" style="text-align: center; padding-bottom: 20px;color: #64a19d;">Nubes de palabras y medidas de cobertura</h3>
+            <div class="panel">
+              <div id="mostrarnubes" class="col-lg-11 mx-auto" style="color: white;">
+
+                <div id="bloquenube1" style="float: left;width: 32%;">
+                  <h3 class="text-white mb-4" style="width:100%;text-align: center;color: white!important;text-decoration: underline;letter-spacing: 2px;margin-bottom: 10px !important;margin: 0 auto;">Original</h3>
+                  <div id="nuberellena1" style="height:400px;width:100%;border: 2px solid #64a19d;cursor: pointer;border-radius: 30px;"></div>
+                
+                  <div id="myModal4" class="modal">
+                    <div id="previsualizacion4" class="modal-content">                                      
+                    </div>
+                  </div>
+                </div>
+
+
+                <div id="bloquenube2" style="float: left;width: 32%;margin: 0 2%;">
+                  <h3 class="text-white mb-4" style="width:100%;text-align: center;color: white!important;text-decoration: underline;letter-spacing: 2px;margin-bottom: 10px !important;margin: 0 auto;">Automático</h3>
+                  <div id="nuberellena2" style="height:400px;width:100%;border: 2px solid #64a19d;cursor: pointer;border-radius: 30px;"></div>
+
+                  <div id="myModal5" class="modal">
+                    <div id="previsualizacion5" class="modal-content">                                      
+                    </div>
+                  </div>
+                </div>
+
+
+                <div id="bloquenube3" style="float: left;width: 32%;">
+                  <h3 class="text-white mb-4" style="width:100%;text-align: center;color: white!important;text-decoration: underline;letter-spacing: 2px;margin-bottom: 10px !important;margin: 0 auto;">Manual</h3>
+                  <div id="nuberellena3" style="height:400px;width:100%;border: 2px solid #64a19d;cursor: pointer;border-radius: 30px;"></div>
+
+                  <div id="myModal6" class="modal">
+                    <div id="previsualizacion6" class="modal-content">                                      
+                    </div>
+                  </div>
+                </div> 
+
+                <div style="clear:both"></div>
+
+                <div id="titulograficamedidas" style="padding-top: 30px;"></div> 
+                <div id="rellenomedidas"></div>
+                <div id="rellenadatosmedida1"></div> 
+                <div id="rellenadatosmedida2"></div> 
+
+                <div style="clear:both"></div> 
+
+              </div>
+            </div>
+
+           
+            <div style="clear:both"></div>           
+
+            <!-- GRAFICAS -->
+            <h3 class="accordion" style="text-align: center; padding-bottom: 20px;color: #64a19d;">Datos estadisticos</h3>
+            <div class="panel">
+              <div id="graficos" class="col-lg-12 mx-auto" style="color: white;">
+                
+                <div id="totalpalabras" style="text-align: center;margin-bottom: 50px;"></div>
+
+                <div style="clear:both"></div>
+                
+                <div id="fila1pie" style="width: 50%;float: left;margin-top: 50px;">
+                  <div id="titulograficareduccion" style="width: 100%;"></div>
+                  <div id="rellenograficasreduccion" style="width: 100%;"></div>
+                  <div id="rellenadatosreduccion" style="width: 100%;float: left;padding: 30px 15px;"></div> 
+                  <!--<div style="clear:both"></div>-->   
+                </div> 
+
+                <div id="fila1bars" style="width: 50%;float: left;margin-top: 50px;">                
+                  <div id="titulograficafrecuencia" style="width: 100%;"></div>
+                  <div id="rellenograficasfrecuencia" style="width: 100%;" class="col-lg-8 mx-auto"></div>
+                  <div id="rellenadatosfrecuencia" style="width: 100%;float: left;margin-top: -4px;padding: 0 10px;"></div>
+                </div>
+
+                <div style="clear:both"></div>
+                <div id="titulograficamedidas" style="padding-top: 30px;"></div> 
+                <div id="rellenomedidas"></div>
+                <div id="rellenadatosmedida1"></div> 
+                <div id="rellenadatosmedida2"></div> 
+
+                <div style="clear:both"></div>                         
+              </div>
+
+
+            </div>
+
+
+            <div style="clear:both"></div>
+            <!-- INFORME -->
+            <h3 class="accordion" style="text-align: center; padding-bottom: 20px;color: #64a19d;">Informe</h3>
+            <div class="panel">        
+              <iframe id="preview-pane" style="width: 100%; height: 500px"></iframe>
+              
+
+            </div>
+
+            <div style="clear:both"></div>
+
+            <h5 style="text-align: right; margin-top: 40px;color: #64a19d;cursor: pointer;" onclick="mostrarExaminar()"><i class="fas fa-sync-alt"></i> Volver a evaluar</h5>
+
+
+
+          </div>
+        </div>
+        
+
+
+      </div>
+    </section>  
+
+   <footer style="background: #2a3652!important;">
+
+    <div id="acerca">
+        <i class="fas fa-envelope text-primary toggle" data-toggle="popover5" data-content="contact@isummary.com" style="margin-right: 30px; cursor: pointer;"></i>
+        <i class="fas fa-map-marked-alt text-primary toggle" data-toggle="popover6" data-content="Carretera de San Vicente del Raspeig, s/n, 03690 San Vicente del Raspeig, Alicante - 965 90 34 00" style="margin-right: 30px; cursor: pointer;"></i>  
+        <i class="fas fa-user-circle text-primary toggle" data-toggle="popover7" data-content="lpmm1@alu.ua.es" style="cursor: pointer;"></i>        
+    </div>
+    
+    <a href="http://www.ua.es/" target="_blank" style="padding: 10px;"><img id="imagenUA" src="./img/ua.png" style="width: 40px;border-radius: 5px; opacity: 0.6;" alt="imagenUA"></a>
+    <a href="http://www.dlsi.ua.es/" target="_blank" style="padding: 10px;"><img id="imagendlsi" src="./img/dlsi.jpg" style="width: 105px;border-radius: 5px; opacity: 0.6;" alt="imagendlsi"></a>
+    <a href="https://gplsi.dlsi.ua.es/" target="_blank" style="padding: 10px;"><img id="imagengplsi" src="./img/gplsi.jpg" style="width: 105px;border-radius: 5px;margin-right: 20px; opacity: 0.6;" alt="imagengplsi"></a>
+          
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/grayscale.min.js"></script>    
+
+    <script src="js/codigo.js"></script>   
+
+    <script src="js/jqcloud-1.0.4.min.js"></script>    
+
+  </body>
+
+</html>
